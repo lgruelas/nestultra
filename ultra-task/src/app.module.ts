@@ -1,10 +1,11 @@
 import { Module, Logger } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CarsController } from './cars/cars.controller';
 import { CarsService } from './cars/cars.service';
 import { CarsModule } from './cars/cars.module';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { CarEntity } from './cars/entities/car.entity';
 import { OwnerEntity } from './cars/entities/owner.entity';
 import { ManufacturerEntity } from './cars/entities/manufacturer.entity';

@@ -3,7 +3,7 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 
 import { CarsService } from './cars.service';
 import { CarEntity } from './entities/car.entity';
-import { CreateCarDto } from './dto';
+import { CreateCarDto, UpdateCarDto } from './dto';
 import { ManufacturerEntity } from './entities/manufacturer.entity';
 import { OwnerEntity } from './entities/owner.entity';
 import { NotFoundException } from '@nestjs/common';
@@ -12,7 +12,8 @@ const mockCarRepository = () => ({
   save: jest.fn(),
   findOne: jest.fn(),
   find: jest.fn(),
-  delete: jest.fn()
+  delete: jest.fn(),
+  update: jest.fn()
 });
 
 describe('CarsService', () => {
@@ -64,10 +65,82 @@ describe('CarsService', () => {
       car.price = carDto.price;
       car.manufacturer = manufacturer;
       car.owners = owners;
-      const result = await service.create(car);
-      expect(carRepository.save).toHaveBeenCalledWith(carDto);
+      const result = await service.create(carDto);
+      expect(carRepository.save).toHaveBeenCalledWith(car);
       expect(result).toEqual("someValue");
     });
+
+    it('Did not create manufacturer when id is sent', async () => {
+      carRepository.save.mockResolvedValue("someValue");
+
+      expect(carRepository.save).not.toHaveBeenCalled();
+      const carDto: CreateCarDto = {
+        price: 2250,
+        manufacturer: {
+            id: "someId",
+            name: "manufacturer1",
+            siret: 34,
+            phone: "35"
+        },
+        owners: [{
+          name: "owner1"
+        }]
+      };
+      const car: CarEntity = new CarEntity();
+      const manufacturer = new ManufacturerEntity();
+      manufacturer.id = "someId";
+      const owners = carDto.owners.map(ownerDto => {
+          const owner = new OwnerEntity();
+          owner.name = ownerDto.name;
+          return owner;
+      });
+      car.price = carDto.price;
+      car.manufacturer = manufacturer;
+      car.owners = owners;
+      const result = await service.create(carDto);
+      expect(carRepository.save).toHaveBeenCalledWith(car);
+      expect(result).toEqual("someValue");
+    });
+  });
+
+  it('Did not create owner when id is sent', async () => {
+    carRepository.save.mockResolvedValue("someValue");
+
+    expect(carRepository.save).not.toHaveBeenCalled();
+    const carDto: CreateCarDto = {
+      price: 2250,
+      manufacturer: {
+          name: "manufacturer1",
+          siret: 34,
+          phone: "35"
+      },
+      owners: [{
+        name: "owner1"
+      },{
+        id: "someId",
+        name: "owner2"
+      }]
+    };
+    const car: CarEntity = new CarEntity();
+    const manufacturer = new ManufacturerEntity();
+    manufacturer.name = carDto.manufacturer.name;
+    manufacturer.phone = carDto.manufacturer.phone;
+    manufacturer.siret = carDto.manufacturer.siret;
+    const owners = carDto.owners.map(ownerDto => {
+        const owner = new OwnerEntity();
+        if (ownerDto.id) {
+          owner.id = ownerDto.id;
+        } else {
+          owner.name = ownerDto.name;
+        }
+        return owner;
+    });
+    car.price = carDto.price;
+    car.manufacturer = manufacturer;
+    car.owners = owners;
+    const result = await service.create(carDto);
+    expect(carRepository.save).toHaveBeenCalledWith(car);
+    expect(result).toEqual("someValue");
   });
 
   describe('FindAllCars', () => {
@@ -113,6 +186,72 @@ describe('CarsService', () => {
 
       expect(carRepository.delete).not.toHaveBeenCalled();
       expect(service.delete("1")).rejects.toThrow(NotFoundException);
+    });
+  });
+
+  describe('UpdateCar', () => {
+    it('Updates car when there is no change in relations', async () => {
+      const carDto: UpdateCarDto = {
+        price: 23
+      };
+
+      expect(carRepository.update).not.toHaveBeenCalled();
+      expect(carRepository.save).not.toHaveBeenCalled();
+      await service.update("id", carDto);
+      expect(carRepository.save).not.toHaveBeenCalled();
+      expect(carRepository.update).toHaveBeenCalledWith("id", carDto);
+    });
+
+    it('Updates manufacturer when passed', async () => {
+      const carDto: UpdateCarDto = {
+        price: 23,
+        manufacturer: {
+          id: "someId",
+          name: "name",
+          siret: 2,
+          phone: "phone"
+        }
+      };
+      const car = new CarEntity();
+      car.price = 23;
+      car.id = "id";
+      const manufacturer = new ManufacturerEntity();
+      manufacturer.id = carDto.manufacturer.id;
+      car.manufacturer = manufacturer;
+
+      expect(carRepository.update).not.toHaveBeenCalled();
+      expect(carRepository.save).not.toHaveBeenCalled();
+      await service.update("id", carDto);
+      expect(carRepository.update).not.toHaveBeenCalled();
+      expect(carRepository.save).toHaveBeenCalledWith(car);
+    });
+
+    it('Updates owners list when passed', async () => {
+      const carDto: UpdateCarDto = {
+        price: 23,
+        owners: [{
+          id: "someId1",
+          name: "owner1"
+        },{
+          id: "someId2",
+          name: "owner2"
+        }]
+      };
+      const car = new CarEntity();
+      car.price = 23;
+      car.id = "id";
+      const owners = carDto.owners.map(ownerDto => {
+        const owner = new OwnerEntity();
+        owner.id = ownerDto.id;
+        return owner;
+      });
+      car.owners = owners;
+
+      expect(carRepository.update).not.toHaveBeenCalled();
+      expect(carRepository.save).not.toHaveBeenCalled();
+      await service.update("id", carDto);
+      expect(carRepository.update).not.toHaveBeenCalled();
+      expect(carRepository.save).toHaveBeenCalledWith(car);
     });
   });
 });

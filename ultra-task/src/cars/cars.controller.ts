@@ -26,7 +26,7 @@ export class CarsController {
     }
 
     @Put(':id')
-    update(@Param('id') id: string, @Body() updateCar: UpdateCarDto): Promise<UpdateResult> {
+    update(@Param('id') id: string, @Body() updateCar: UpdateCarDto): Promise<void> {
         return this.carsService.update(id, updateCar);
     }
 
