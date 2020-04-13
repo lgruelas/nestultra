@@ -1,8 +1,8 @@
-import { Manufacturer, Owner } from './../interfaces';
+import { ManufacturerDto } from './manufacturer.dto';
+import { OwnerDto } from './owner.dto';
 
 export class CreateCarDto {
-    manufacturer: Manufacturer;
+    manufacturer: ManufacturerDto;
     price: number;
-    firstRegistrationDate: Date;
-    owners: Array<Owner>;
+    owners: Array<OwnerDto>;
 }
