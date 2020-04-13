@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, getConnection } from 'typeorm';
 
 import { UpdateCarDto, CreateCarDto } from './dto';
 import { CarEntity } from './entities/car.entity';
@@ -97,5 +97,25 @@ export class CarsService {
         if (result.affected === 0) {
             throw new NotFoundException("Car with given id not found.");
         }
+    }
+
+    async findManufacturer(id: string): Promise<ManufacturerEntity> {
+        const manufacturer = await getConnection()
+            .createQueryBuilder()
+            .select("manufacturer")
+            .from(ManufacturerEntity, "manufacturer")
+            .where( qb => {
+                const subQuery = qb.subQuery()
+                    .select('"car"."manufacturerId"')
+                    .from(CarEntity, "car")
+                    .where("car.id = :id", {id: id})
+                    .getQuery();
+                return "manufacturer.id = " + subQuery;
+            })
+            .getOne();
+        if (!manufacturer) {
+            throw new NotFoundException("Car with given id not found.");
+        }
+        return manufacturer;
     }
 }

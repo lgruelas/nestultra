@@ -1,12 +1,13 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
+import { NotFoundException } from '@nestjs/common';
+import { getConnection } from 'typeorm';
 
 import { CarsService } from './cars.service';
 import { CarEntity } from './entities/car.entity';
 import { CreateCarDto, UpdateCarDto } from './dto';
 import { ManufacturerEntity } from './entities/manufacturer.entity';
 import { OwnerEntity } from './entities/owner.entity';
-import { NotFoundException } from '@nestjs/common';
 
 const mockCarRepository = () => ({
   save: jest.fn(),

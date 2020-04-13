@@ -3,7 +3,7 @@ import { Controller, Get, Post, Put, Delete, Param, Body, ValidationPipe, UsePip
 import { CarsService } from './cars.service';
 import { CreateCarDto, UpdateCarDto } from './dto';
 import { CarEntity } from './entities/car.entity';
-import { UpdateResult } from 'typeorm';
+import { ManufacturerEntity } from './entities/manufacturer.entity';
 
 @Controller('cars')
 export class CarsController {
@@ -23,6 +23,11 @@ export class CarsController {
     @Get(':id')
     findOne(@Param('id') id: string): Promise<CarEntity> {
         return this.carsService.findOne(id);
+    }
+
+    @Get(':id/manufacturer')
+    findManufacturer(@Param('id') id: string): Promise<ManufacturerEntity> {
+        return this.carsService.findManufacturer(id);
     }
 
     @Put(':id')
