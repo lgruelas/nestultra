@@ -2,10 +2,12 @@ FROM node:alpine
 
 WORKDIR /usr/src/ultra
 
-COPY /ultra-task/package.json /usr/src/ultra
+COPY package.json /usr/src/ultra
 
 RUN npm install
 
-COPY /ultra-task /usr/src/ultra
+COPY . /usr/src/ultra
+
+EXPOSE 3700
 
 CMD ["npm", "start"]
