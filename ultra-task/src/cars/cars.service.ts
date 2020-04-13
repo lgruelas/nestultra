@@ -21,12 +21,12 @@ export class CarsService {
         } = carDto;
         let newCar = new CarEntity();
         const manufacturer = new ManufacturerEntity();
+        // If a manufacturer id is sent, dont insert a new one in the database
         if (!manufacturerDto.id) {
             manufacturer.name = manufacturerDto.name;
             manufacturer.phone = manufacturerDto.phone;
             manufacturer.siret = manufacturerDto.siret;
         } else {
-            // If a manufacturer id is sent, dont insert a new one in the database
             // Note: Here we should look if the id exist
             manufacturer.id = manufacturerDto.id;
         }
@@ -62,35 +62,35 @@ export class CarsService {
     async update(id: string, carDto: UpdateCarDto): Promise<void> {
         if (!carDto.owners && !carDto.manufacturer) {
             await this.carRepository.update(id, carDto);
-        } else {
-            const {
-                manufacturer: manufacturerDto,
-                owners: ownersDto
-            } = carDto;
-            const car = new CarEntity();
-            car.id = id;
-            car.firstRegistrationDate = carDto.firstRegistrationDate;
-            car.price = carDto.price;
-            if (manufacturerDto) {
-                const manufacturer = new ManufacturerEntity();
-                manufacturer.id = manufacturerDto.id;  // It's only allowed to change the manufacturer
-                car.manufacturer = manufacturer;
-            }
-            if (ownersDto) {
-                    // If it has owners, change the entire list for the new one
-                    const owners = ownersDto.map(ownerDto => {
-                    const owner = new OwnerEntity();
-                    if (ownerDto.id) {
-                        owner.id = ownerDto.id;
-                    } else {
-                        owner.name = ownerDto.name;
-                    }
-                    return owner;
-                });
-                car.owners = owners;
-            }
-            await this.carRepository.save(car);
+            return;
         }
+        const {
+            manufacturer: manufacturerDto,
+            owners: ownersDto
+        } = carDto;
+        const car = new CarEntity();
+        car.id = id;
+        car.firstRegistrationDate = carDto.firstRegistrationDate;
+        car.price = carDto.price;
+        if (manufacturerDto) {
+            const manufacturer = new ManufacturerEntity();
+            manufacturer.id = manufacturerDto.id;  // It's only allowed to change the manufacturer
+            car.manufacturer = manufacturer;
+        }
+        if (ownersDto) {
+            // If it has owners, change the entire list for the new one
+            const owners = ownersDto.map(ownerDto => {
+                const owner = new OwnerEntity();
+                if (ownerDto.id) {
+                    owner.id = ownerDto.id;
+                } else {
+                    owner.name = ownerDto.name;
+                }
+                return owner;
+            });
+            car.owners = owners;
+        }
+        await this.carRepository.save(car);
     }
 
     async delete(id: string): Promise<void> {
@@ -101,7 +101,7 @@ export class CarsService {
     }
 
     async findManufacturer(id: string): Promise<ManufacturerEntity> {
-        const manufacturer = await getConnection()
+        const manufacturer = await this.carRepository
             .createQueryBuilder()
             .select("manufacturer")
             .from(ManufacturerEntity, "manufacturer")

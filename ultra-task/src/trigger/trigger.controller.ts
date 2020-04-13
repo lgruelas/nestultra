@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Post } from '@nestjs/common';
 import { TriggerService } from './trigger.service';
 
 @Controller('trigger')
@@ -8,5 +8,10 @@ export class TriggerController {
     @Get()
     trigger(): void {
         this.triggerService.triggerEvent();
+    }
+
+    @Post()
+    populate(): void{
+        this.triggerService.triggerPopulate();
     }
 }

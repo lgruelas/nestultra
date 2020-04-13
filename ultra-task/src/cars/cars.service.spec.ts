@@ -14,8 +14,9 @@ const mockCarRepository = () => ({
   findOne: jest.fn(),
   find: jest.fn(),
   delete: jest.fn(),
-  update: jest.fn()
+  update: jest.fn(),
 });
+
 
 describe('CarsService', () => {
   let service: CarsService;
@@ -71,7 +72,7 @@ describe('CarsService', () => {
       expect(result).toEqual("someValue");
     });
 
-    it('Did not create manufacturer when id is sent', async () => {
+    it('Did not create manufacturer when manufacturer id is sent', async () => {
       carRepository.save.mockResolvedValue("someValue");
 
       expect(carRepository.save).not.toHaveBeenCalled();
@@ -104,7 +105,7 @@ describe('CarsService', () => {
     });
   });
 
-  it('Did not create owner when id is sent', async () => {
+  it('Did not create owner when owner id is sent', async () => {
     carRepository.save.mockResolvedValue("someValue");
 
     expect(carRepository.save).not.toHaveBeenCalled();

@@ -6,5 +6,5 @@ export class OwnerEntity {
 
     @Column() name: string;
 
-    @CreateDateColumn() purchaseDate: Date;
+    @Column({default: new Date()}) purchaseDate: Date;
 }

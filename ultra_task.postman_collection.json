@@ -1,0 +1,219 @@
+{
+	"info": {
+		"_postman_id": "a759d851-0285-4ca5-838e-dc56b33468e8",
+		"name": "ultra_task",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Populate",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3700/trigger",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3700",
+					"path": [
+						"trigger"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all cars",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3700/cars",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3700",
+					"path": [
+						"cars"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get one car",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3700/cars/2d07b038-4d10-4af8-a009-8f3b145f47ec",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3700",
+					"path": [
+						"cars",
+						"2d07b038-4d10-4af8-a009-8f3b145f47ec"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ger manufacturer info",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3700/cars/2d07b038-4d10-4af8-a009-8f3b145f47ec/manufacturer",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3700",
+					"path": [
+						"cars",
+						"2d07b038-4d10-4af8-a009-8f3b145f47ec",
+						"manufacturer"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create car",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"price\": 2950,\n    \"manufacturer\": {\n        \"name\": \"manufacturer3\",\n        \"siret\": 34,\n        \"phone\": \"phone3\"\n    },\n    \"owners\": [{\n    \t\"name\": \"fifth owner\"\n    },{\n    \t\"id\": \"1c5fae25-aea9-4a65-80db-504b36660f05\",\n    \t\"name\": \"second owner\"\n    }]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3700/cars",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3700",
+					"path": [
+						"cars"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update change manufacturer",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"price\": 2150,\n\t\"manufacturer\":{\n\t\t\"id\":\"64dc68f8-a173-42cd-bdb8-7acd08894537\"\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3700/cars/2d07b038-4d10-4af8-a009-8f3b145f47ec",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3700",
+					"path": [
+						"cars",
+						"2d07b038-4d10-4af8-a009-8f3b145f47ec"
+					]
+				},
+				"description": "Changes the manufacturer of the first car from manufacturer1 to manufacturer2 and the price"
+			},
+			"response": []
+		},
+		{
+			"name": "Update change price",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"price\": 2500\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3700/cars/e0ce8303-f566-4cce-8c9c-2d9a1c621a78",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3700",
+					"path": [
+						"cars",
+						"e0ce8303-f566-4cce-8c9c-2d9a1c621a78"
+					]
+				},
+				"description": "Change price of a car mantaining everything else."
+			},
+			"response": []
+		},
+		{
+			"name": "Delete car",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3700/cars/e0ce8303-f566-4cce-8c9c-2d9a1c621a78",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3700",
+					"path": [
+						"cars",
+						"e0ce8303-f566-4cce-8c9c-2d9a1c621a78"
+					]
+				},
+				"description": "deletes a car, cleaning the relation table with owners"
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

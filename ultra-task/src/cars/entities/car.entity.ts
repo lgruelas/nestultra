@@ -6,7 +6,7 @@ import { OwnerEntity } from './owner.entity';
 export class CarEntity {
     @PrimaryGeneratedColumn('uuid') id: string;
 
-    @CreateDateColumn() firstRegistrationDate: Date;
+    @Column({default: new Date()}) firstRegistrationDate: Date;
 
     @Column('real') price: number;
 
