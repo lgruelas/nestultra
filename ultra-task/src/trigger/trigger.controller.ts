@@ -10,7 +10,7 @@ export class TriggerController {
         this.triggerService.triggerEvent();
     }
 
-    @Post()
+    @Post("/populate")
     populate(): void{
         this.triggerService.triggerPopulate();
     }

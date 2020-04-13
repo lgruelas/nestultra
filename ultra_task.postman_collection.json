@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "a759d851-0285-4ca5-838e-dc56b33468e8",
+		"_postman_id": "4afe78da-3721-4d91-a9ff-d01f283d193f",
 		"name": "ultra_task",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -11,14 +11,15 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3700/trigger",
+					"raw": "http://localhost:3700/trigger/populate",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "3700",
 					"path": [
-						"trigger"
+						"trigger",
+						"populate"
 					]
 				}
 			},
@@ -64,7 +65,7 @@
 			"response": []
 		},
 		{
-			"name": "Ger manufacturer info",
+			"name": "Get manufacturer info",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -79,6 +80,25 @@
 						"cars",
 						"2d07b038-4d10-4af8-a009-8f3b145f47ec",
 						"manufacturer"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Apply discount",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3700/trigger",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3700",
+					"path": [
+						"trigger"
 					]
 				}
 			},

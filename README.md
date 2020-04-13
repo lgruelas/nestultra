@@ -16,7 +16,7 @@ docker-compose up
 ### First
 Please make a `POST` request to the endopint:
 ```
-http://localhost:3700/trigger
+http://localhost:3700/trigger/populate
 ```
 In order to populate the database with example data needed in postman.
 
@@ -49,7 +49,7 @@ docker-compose down -v
 | resource      | description                       |
 |:--------------|:----------------------------------|
 | `/cars`             | Inserts a car in the database, if the owners and manufacturer id alredady exists it associates with them, if not, they are created **firstRegistrationDate** is optional.
-| `/trigger`    | Special endpoint that adds an example to the database, should be reached just once.
+| `/trigger/populate`    | Special endpoint that adds an example to the database, should be reached just once.
 ### PUT
 | resource      | description                       |
 |:--------------|:----------------------------------|
