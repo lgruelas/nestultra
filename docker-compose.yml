@@ -15,6 +15,7 @@ services:
             - ultra-network
 
     worker:
+        container_name: nest_worker
         build: ./ultra-task
         ports:
             - 3700:4000

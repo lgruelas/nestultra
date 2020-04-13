@@ -105,7 +105,7 @@ describe('CarsService', () => {
 
       expect(carRepository.delete).not.toHaveBeenCalled();
       await service.delete("id");
-      expect(carRepository.delete).toHaveBeenCalledWith("id");
+      expect(carRepository.delete).toHaveBeenCalledWith("id fail");
     });
 
     it('throws an exception if id does not exist', () => {
