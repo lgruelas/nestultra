@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, getConnection } from 'typeorm';
+import { Repository } from 'typeorm';
 
 import { UpdateCarDto, CreateCarDto } from './dto';
 import { CarEntity } from './entities/car.entity';
