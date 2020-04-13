@@ -8,7 +8,7 @@ export class CarEntity {
 
     @CreateDateColumn() firstRegistrationDate: Date;
 
-    @Column() price: number;
+    @Column('real') price: number;
 
     @ManyToOne(type => ManufacturerEntity, manufacturer => manufacturer.cars, {cascade: true})
     manufacturer: ManufacturerEntity;

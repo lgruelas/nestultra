@@ -5,4 +5,5 @@ export class CreateCarDto {
     manufacturer: ManufacturerDto;
     price: number;
     owners: Array<OwnerDto>;
+    firstRegistrationDate?: Date;
 }

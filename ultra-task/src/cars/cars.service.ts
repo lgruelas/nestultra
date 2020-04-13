@@ -43,6 +43,7 @@ export class CarsService {
         newCar.price = carDto.price;
         newCar.manufacturer = manufacturer;
         newCar.owners = owners;
+        newCar.firstRegistrationDate = carDto.firstRegistrationDate;
         return this.carRepository.save(newCar);
     }
 

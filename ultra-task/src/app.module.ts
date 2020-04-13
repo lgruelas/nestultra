@@ -9,6 +9,8 @@ import { CarsModule } from './cars/cars.module';
 import { CarEntity } from './cars/entities/car.entity';
 import { OwnerEntity } from './cars/entities/owner.entity';
 import { ManufacturerEntity } from './cars/entities/manufacturer.entity';
+import { TriggerController } from './trigger/trigger.controller';
+import { TriggerService } from './trigger/trigger.service';
 
 Logger.log(`Running on port ${process.env}`, 'Bootstrap');
 @Module({
@@ -23,7 +25,7 @@ Logger.log(`Running on port ${process.env}`, 'Bootstrap');
         "synchronize": true,
         "logging": true
     }), CarsModule],
-  controllers: [AppController, CarsController],
-  providers: [AppService, CarsService],
+  controllers: [AppController, CarsController, TriggerController],
+  providers: [AppService, CarsService, TriggerService],
 })
 export class AppModule {}
